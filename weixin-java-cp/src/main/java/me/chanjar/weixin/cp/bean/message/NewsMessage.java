@@ -2,12 +2,10 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.News;
+import me.chanjar.weixin.cp.bean.message.subassembly.News;
 
 /**
  * safe表示是否是保密消息，0表示可对外分享，1表示不能分享且内容显示水印，2表示仅限在企业内分享，默认为0；
@@ -17,17 +15,22 @@ import me.chanjar.weixin.cp.bean.message.detail.News;
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class NewsMessage extends AbstractWxCpMessage {
+public class NewsMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * 图文消息，一个图文消息支持1到8条图文
    */
-  @SerializedName("mpnews")
+  @SerializedName("news")
   private News news;
+
+  /**
+   * 表示是否开启id转译，0表示否，1表示是，默认0
+   */
+  @SerializedName("enable_id_trans")
+  protected String enableIdTrans = IdTransEnum.DISABLE.getValue();
 
   private NewsMessage() {
     setMsgType(WxConsts.KefuMsgType.NEWS);
@@ -42,7 +45,6 @@ public class NewsMessage extends AbstractWxCpMessage {
     private String toUser;
     private String toParty;
     private String toTag;
-    private MsgSafeEnum safe = MsgSafeEnum.NO;
     private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private News news;
 
@@ -74,11 +76,6 @@ public class NewsMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setSafe(MsgSafeEnum safe) {
-      this.safe = safe;
-      return this;
-    }
-
     public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
       this.enableIdTrans = enableIdTrans;
       return this;
@@ -86,13 +83,12 @@ public class NewsMessage extends AbstractWxCpMessage {
 
     public NewsMessage build() {
       NewsMessage newsMessage = new NewsMessage();
-      newsMessage.setNews(news);
-      newsMessage.setAgentId(agentId);
-      newsMessage.setToUser(toUser);
-      newsMessage.setToParty(toParty);
-      newsMessage.setToTag(toTag);
-      newsMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      newsMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      newsMessage.news = news;
+      newsMessage.agentId = agentId;
+      newsMessage.toUser = toUser;
+      newsMessage.toParty = toParty;
+      newsMessage.toTag = toTag;
+      newsMessage.enableIdTrans = enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue();
       return newsMessage;
     }
   }

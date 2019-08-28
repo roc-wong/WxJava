@@ -2,21 +2,17 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.Text;
+import me.chanjar.weixin.cp.bean.message.subassembly.Text;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class MarkdownMessage extends AbstractWxCpMessage {
+public class MarkdownMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -39,8 +35,6 @@ public class MarkdownMessage extends AbstractWxCpMessage {
     private String toUser;
     private String toParty;
     private String toTag;
-    private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private String content;
 
     private Builder() {
@@ -71,25 +65,13 @@ public class MarkdownMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setSafe(MsgSafeEnum safe) {
-      this.safe = safe;
-      return this;
-    }
-
-    public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public MarkdownMessage build() {
       MarkdownMessage markdownMessage = new MarkdownMessage();
-      markdownMessage.setText(new Text(content));
-      markdownMessage.setAgentId(agentId);
-      markdownMessage.setToUser(toUser);
-      markdownMessage.setToParty(toParty);
-      markdownMessage.setToTag(toTag);
-      markdownMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      markdownMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      markdownMessage.text = new Text(content);
+      markdownMessage.agentId = agentId;
+      markdownMessage.toUser = toUser;
+      markdownMessage.toParty = toParty;
+      markdownMessage.toTag = toTag;
       return markdownMessage;
     }
   }

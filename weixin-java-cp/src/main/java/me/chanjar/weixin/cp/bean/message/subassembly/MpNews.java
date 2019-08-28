@@ -1,6 +1,5 @@
-package me.chanjar.weixin.cp.bean.message.detail;
+package me.chanjar.weixin.cp.bean.message.subassembly;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,6 +7,7 @@ import me.chanjar.weixin.cp.bean.article.MpnewsArticle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +27,13 @@ public class MpNews implements Serializable {
   /**
    * 图文消息，一个图文消息支持1到8条图文
    */
-  @SerializedName("content_item")
   private List<MpnewsArticle> articles = new ArrayList<>();
 
+  public void addArticles(MpnewsArticle... articles) {
+    Collections.addAll(this.articles, articles);
+  }
+
+  public void addArticle(MpnewsArticle article) {
+    this.articles.add(article);
+  }
 }

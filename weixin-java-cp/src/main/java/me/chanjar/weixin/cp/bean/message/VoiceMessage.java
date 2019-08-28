@@ -2,21 +2,17 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.Media;
+import me.chanjar.weixin.cp.bean.message.subassembly.Media;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class VoiceMessage extends AbstractWxCpMessage {
+public class VoiceMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -39,8 +35,6 @@ public class VoiceMessage extends AbstractWxCpMessage {
     private String toUser;
     private String toParty;
     private String toTag;
-    private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private String mediaId;
 
     private Builder() {
@@ -71,25 +65,13 @@ public class VoiceMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setSafe(MsgSafeEnum safe) {
-      this.safe = safe;
-      return this;
-    }
-
-    public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public VoiceMessage build() {
       VoiceMessage voiceMessage = new VoiceMessage();
-      voiceMessage.setMedia(new Media(mediaId));
-      voiceMessage.setAgentId(agentId);
-      voiceMessage.setToUser(toUser);
-      voiceMessage.setToParty(toParty);
-      voiceMessage.setToTag(toTag);
-      voiceMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      voiceMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      voiceMessage.media = new Media(mediaId);
+      voiceMessage.agentId = agentId;
+      voiceMessage.toUser = toUser;
+      voiceMessage.toParty = toParty;
+      voiceMessage.toTag = toTag;
       return voiceMessage;
     }
   }

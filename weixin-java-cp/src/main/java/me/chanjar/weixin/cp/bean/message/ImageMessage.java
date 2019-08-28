@@ -2,21 +2,18 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
 import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.Media;
+import me.chanjar.weixin.cp.bean.message.subassembly.Media;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class ImageMessage extends AbstractWxCpMessage {
+public class ImageMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -25,6 +22,12 @@ public class ImageMessage extends AbstractWxCpMessage {
    */
   @SerializedName("image")
   private Media media;
+
+  /**
+   * 表示是否是保密消息，0表示否，1表示是，默认0
+   */
+  @SerializedName("safe")
+  protected String safe = MsgSafeEnum.NO.getValue();
 
   private ImageMessage() {
     setMsgType(WxConsts.KefuMsgType.IMAGE);
@@ -40,7 +43,6 @@ public class ImageMessage extends AbstractWxCpMessage {
     private String toParty;
     private String toTag;
     private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private String mediaId;
 
     private Builder() {
@@ -76,20 +78,14 @@ public class ImageMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public ImageMessage.Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public ImageMessage build() {
       ImageMessage imageMessage = new ImageMessage();
-      imageMessage.setMedia(new Media(mediaId));
-      imageMessage.setAgentId(agentId);
-      imageMessage.setToUser(toUser);
-      imageMessage.setToParty(toParty);
-      imageMessage.setToTag(toTag);
-      imageMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      imageMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      imageMessage.media = new Media(mediaId);
+      imageMessage.agentId = agentId;
+      imageMessage.toUser = toUser;
+      imageMessage.toParty = toParty;
+      imageMessage.toTag = toTag;
+      imageMessage.safe = safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue();
       return imageMessage;
     }
   }

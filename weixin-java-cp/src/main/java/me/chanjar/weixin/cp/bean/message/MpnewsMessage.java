@@ -2,12 +2,11 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.constant.IdTransEnum;
 import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.MpNews;
+import me.chanjar.weixin.cp.bean.message.subassembly.MpNews;
 
 /**
  * safe表示是否是保密消息，0表示可对外分享，1表示不能分享且内容显示水印，2表示仅限在企业内分享，默认为0；
@@ -17,14 +16,25 @@ import me.chanjar.weixin.cp.bean.message.detail.MpNews;
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class MpnewsMessage extends AbstractWxCpMessage {
+public class MpnewsMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
   @SerializedName("mpnews")
   private MpNews mpnews;
+
+  /**
+   * 表示是否是保密消息，0表示否，1表示是，默认0
+   */
+  @SerializedName("safe")
+  protected String safe = MsgSafeEnum.NO.getValue();
+
+  /**
+   * 表示是否开启id转译，0表示否，1表示是，默认0
+   */
+  @SerializedName("enable_id_trans")
+  protected String enableIdTrans = IdTransEnum.DISABLE.getValue();
 
   private MpnewsMessage() {
     setMsgType(WxConsts.KefuMsgType.MPNEWS);
@@ -83,13 +93,13 @@ public class MpnewsMessage extends AbstractWxCpMessage {
 
     public MpnewsMessage build() {
       MpnewsMessage mpnewsMessage = new MpnewsMessage();
-      mpnewsMessage.setMpnews(mpnews);
-      mpnewsMessage.setAgentId(agentId);
-      mpnewsMessage.setToUser(toUser);
-      mpnewsMessage.setToParty(toParty);
-      mpnewsMessage.setToTag(toTag);
-      mpnewsMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      mpnewsMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      mpnewsMessage.mpnews = mpnews;
+      mpnewsMessage.agentId = agentId;
+      mpnewsMessage.toUser = toUser;
+      mpnewsMessage.toParty = toParty;
+      mpnewsMessage.toTag = toTag;
+      mpnewsMessage.safe = safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue();
+      mpnewsMessage.enableIdTrans = enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue();
       return mpnewsMessage;
     }
   }

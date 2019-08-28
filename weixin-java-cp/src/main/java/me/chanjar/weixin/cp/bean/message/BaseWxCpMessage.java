@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
 
 import java.io.Serializable;
 
@@ -17,7 +15,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public abstract class AbstractWxCpMessage implements Serializable {
+public class BaseWxCpMessage implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -50,17 +48,4 @@ public abstract class AbstractWxCpMessage implements Serializable {
    */
   @SerializedName("totag")
   protected String toTag;
-
-  /**
-   * 表示是否是保密消息，0表示否，1表示是，默认0
-   */
-  @SerializedName("safe")
-  protected String safe = MsgSafeEnum.NO.getValue();
-
-  /**
-   * 表示是否开启id转译，0表示否，1表示是，默认0
-   */
-  @SerializedName("enable_id_trans")
-  protected String enableIdTrans = IdTransEnum.DISABLE.getValue();
-
 }

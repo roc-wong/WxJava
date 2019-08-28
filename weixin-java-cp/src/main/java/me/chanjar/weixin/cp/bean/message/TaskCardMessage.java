@@ -2,21 +2,17 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.TaskCard;
+import me.chanjar.weixin.cp.bean.message.subassembly.TaskCard;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class TaskCardMessage extends AbstractWxCpMessage {
+public class TaskCardMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -39,8 +35,6 @@ public class TaskCardMessage extends AbstractWxCpMessage {
     protected String toUser;
     protected String toParty;
     protected String toTag;
-    private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private TaskCard taskCard;
 
     private Builder() {
@@ -71,25 +65,13 @@ public class TaskCardMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setSafe(MsgSafeEnum safe) {
-      this.safe = safe;
-      return this;
-    }
-
-    public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public TaskCardMessage build() {
       TaskCardMessage taskCardMessage = new TaskCardMessage();
-      taskCardMessage.setTaskCard(taskCard);
-      taskCardMessage.setAgentId(agentId);
-      taskCardMessage.setToUser(toUser);
-      taskCardMessage.setToParty(toParty);
-      taskCardMessage.setToTag(toTag);
-      taskCardMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      taskCardMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      taskCardMessage.taskCard = taskCard;
+      taskCardMessage.agentId = agentId;
+      taskCardMessage.toUser = toUser;
+      taskCardMessage.toParty = toParty;
+      taskCardMessage.toTag = toTag;
       return taskCardMessage;
     }
   }

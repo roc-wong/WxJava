@@ -2,21 +2,19 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.constant.IdTransEnum;
 import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.Text;
+import me.chanjar.weixin.cp.bean.message.subassembly.Text;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class TextMessage extends AbstractWxCpMessage {
+public class TextMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -25,6 +23,18 @@ public class TextMessage extends AbstractWxCpMessage {
    */
   @SerializedName("text")
   private Text text;
+
+  /**
+   * 表示是否是保密消息，0表示否，1表示是，默认0
+   */
+  @SerializedName("safe")
+  protected String safe = MsgSafeEnum.NO.getValue();
+
+  /**
+   * 表示是否开启id转译，0表示否，1表示是，默认0
+   */
+  @SerializedName("enable_id_trans")
+  protected String enableIdTrans = IdTransEnum.DISABLE.getValue();
 
   public TextMessage() {
     setMsgType(WxConsts.KefuMsgType.TEXT);
@@ -83,13 +93,13 @@ public class TextMessage extends AbstractWxCpMessage {
 
     public TextMessage build() {
       TextMessage textMessage = new TextMessage();
-      textMessage.setText(new Text(content));
-      textMessage.setAgentId(agentId);
-      textMessage.setToUser(toUser);
-      textMessage.setToParty(toParty);
-      textMessage.setToTag(toTag);
-      textMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      textMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      textMessage.text = new Text(content);
+      textMessage.agentId = agentId;
+      textMessage.toUser = toUser;
+      textMessage.toParty = toParty;
+      textMessage.toTag = toTag;
+      textMessage.safe = safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue();
+      textMessage.enableIdTrans = enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue();
       return textMessage;
     }
   }

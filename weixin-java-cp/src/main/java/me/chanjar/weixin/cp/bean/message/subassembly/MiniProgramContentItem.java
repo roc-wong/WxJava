@@ -1,4 +1,4 @@
-package me.chanjar.weixin.cp.bean.message.detail;
+package me.chanjar.weixin.cp.bean.message.subassembly;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +26,9 @@ public class MiniProgramContentItem implements Serializable {
    * 长度10个汉字以内
    */
   private String value;
+
+  public MiniProgramContentItem(String key, String value) {
+    this.key = key;
+    this.value = value;
+  }
 }

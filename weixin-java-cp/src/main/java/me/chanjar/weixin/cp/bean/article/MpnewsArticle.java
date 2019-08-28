@@ -38,7 +38,7 @@ public class MpnewsArticle implements Serializable {
   /**
    * 图文消息点击“阅读原文”之后的页面链接
    */
-  @SerializedName("content_source_url ")
+  @SerializedName("content_source_url")
   private String contentSourceUrl;
 
   /**
@@ -54,7 +54,7 @@ public class MpnewsArticle implements Serializable {
   /**
    * 未知，没有在企业微信API中找到对应的说明
    */
-  @SerializedName("show_cover_pic ")
+  @SerializedName("show_cover_pic")
   private String showCoverPic;
 
 }

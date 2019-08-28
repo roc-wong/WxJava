@@ -2,26 +2,29 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
 import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.Video;
+import me.chanjar.weixin.cp.bean.message.subassembly.Video;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class VideoMessage extends AbstractWxCpMessage {
+public class VideoMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
   @SerializedName("video")
   private Video video;
+
+  /**
+   * 表示是否是保密消息，0表示否，1表示是，默认0
+   */
+  @SerializedName("safe")
+  protected String safe = MsgSafeEnum.NO.getValue();
 
   private VideoMessage() {
     setMsgType(WxConsts.KefuMsgType.VIDEO);
@@ -37,7 +40,6 @@ public class VideoMessage extends AbstractWxCpMessage {
     protected String toParty;
     protected String toTag;
     private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private Video video;
 
     private Builder() {
@@ -73,20 +75,14 @@ public class VideoMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public VideoMessage build() {
       VideoMessage videoMessage = new VideoMessage();
-      videoMessage.setVideo(video);
-      videoMessage.setAgentId(agentId);
-      videoMessage.setToUser(toUser);
-      videoMessage.setToParty(toParty);
-      videoMessage.setToTag(toTag);
-      videoMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      videoMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      videoMessage.video = video;
+      videoMessage.agentId = agentId;
+      videoMessage.toUser = toUser;
+      videoMessage.toParty = toParty;
+      videoMessage.toTag = toTag;
+      videoMessage.safe = safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue();
       return videoMessage;
     }
   }

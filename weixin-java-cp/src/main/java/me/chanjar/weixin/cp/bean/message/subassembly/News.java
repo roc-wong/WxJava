@@ -1,4 +1,4 @@
-package me.chanjar.weixin.cp.bean.message.detail;
+package me.chanjar.weixin.cp.bean.message.subassembly;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +7,7 @@ import me.chanjar.weixin.cp.bean.article.NewArticle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,4 +28,12 @@ public class News implements Serializable {
    * 图文消息，一个图文消息支持1到8条图文
    */
   private List<NewArticle> articles = new ArrayList<>();
+
+  public void addArticles(NewArticle... articles) {
+    Collections.addAll(this.articles, articles);
+  }
+
+  public void addArticle(NewArticle article) {
+    this.articles.add(article);
+  }
 }

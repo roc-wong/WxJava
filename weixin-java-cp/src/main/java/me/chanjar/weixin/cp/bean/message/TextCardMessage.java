@@ -2,26 +2,29 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.TextCard;
+import me.chanjar.weixin.cp.bean.message.subassembly.TextCard;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class TextCardMessage extends AbstractWxCpMessage {
+public class TextCardMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
   @SerializedName("textcard")
   private TextCard textCard;
+
+  /**
+   * 表示是否开启id转译，0表示否，1表示是，默认0
+   */
+  @SerializedName("enable_id_trans")
+  protected String enableIdTrans = IdTransEnum.DISABLE.getValue();
 
   private TextCardMessage() {
     setMsgType(WxConsts.KefuMsgType.TEXTCARD);
@@ -36,7 +39,6 @@ public class TextCardMessage extends AbstractWxCpMessage {
     protected String toUser;
     protected String toParty;
     protected String toTag;
-    private MsgSafeEnum safe = MsgSafeEnum.NO;
     private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private TextCard textCard;
 
@@ -68,11 +70,6 @@ public class TextCardMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setSafe(MsgSafeEnum safe) {
-      this.safe = safe;
-      return this;
-    }
-
     public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
       this.enableIdTrans = enableIdTrans;
       return this;
@@ -80,13 +77,12 @@ public class TextCardMessage extends AbstractWxCpMessage {
 
     public TextCardMessage build() {
       TextCardMessage textCardMessage = new TextCardMessage();
-      textCardMessage.setTextCard(textCard);
-      textCardMessage.setAgentId(agentId);
-      textCardMessage.setToUser(toUser);
-      textCardMessage.setToParty(toParty);
-      textCardMessage.setToTag(toTag);
-      textCardMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      textCardMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      textCardMessage.textCard = textCard;
+      textCardMessage.agentId = agentId;
+      textCardMessage.toUser = toUser;
+      textCardMessage.toParty = toParty;
+      textCardMessage.toTag = toTag;
+      textCardMessage.enableIdTrans = enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue();
       return textCardMessage;
     }
   }

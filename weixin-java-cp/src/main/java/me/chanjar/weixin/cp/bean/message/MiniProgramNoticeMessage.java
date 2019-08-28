@@ -2,21 +2,17 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
-import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.MiniProgramNotice;
+import me.chanjar.weixin.cp.bean.message.subassembly.MiniProgramNotice;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class MiniProgramNoticeMessage extends AbstractWxCpMessage {
+public class MiniProgramNoticeMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -36,8 +32,6 @@ public class MiniProgramNoticeMessage extends AbstractWxCpMessage {
     protected String toUser;
     private String toParty;
     private String toTag;
-    private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private MiniProgramNotice miniProgramNotice;
 
     private Builder() {
@@ -68,25 +62,13 @@ public class MiniProgramNoticeMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setSafe(MsgSafeEnum safe) {
-      this.safe = safe;
-      return this;
-    }
-
-    public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public MiniProgramNoticeMessage build() {
       MiniProgramNoticeMessage miniProgramNoticeMessage = new MiniProgramNoticeMessage();
-      miniProgramNoticeMessage.setMiniProgramNotice(miniProgramNotice);
-      miniProgramNoticeMessage.setAgentId(agentId);
-      miniProgramNoticeMessage.setToUser(toUser);
-      miniProgramNoticeMessage.setToParty(toParty);
-      miniProgramNoticeMessage.setToTag(toTag);
-      miniProgramNoticeMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      miniProgramNoticeMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      miniProgramNoticeMessage.miniProgramNotice = miniProgramNotice;
+      miniProgramNoticeMessage.agentId = agentId;
+      miniProgramNoticeMessage.toUser = toUser;
+      miniProgramNoticeMessage.toParty = toParty;
+      miniProgramNoticeMessage.toTag = toTag;
       return miniProgramNoticeMessage;
     }
   }

@@ -1,4 +1,4 @@
-package me.chanjar.weixin.cp.bean.message.detail;
+package me.chanjar.weixin.cp.bean.message.subassembly;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Builder;

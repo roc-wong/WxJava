@@ -2,21 +2,18 @@ package me.chanjar.weixin.cp.bean.message;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.constant.IdTransEnum;
 import me.chanjar.weixin.common.constant.MsgSafeEnum;
-import me.chanjar.weixin.cp.bean.message.detail.Media;
+import me.chanjar.weixin.cp.bean.message.subassembly.Media;
 
 /**
  * @author roc
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
 @ToString(callSuper = true)
-public class FileMessage extends AbstractWxCpMessage {
+public class FileMessage extends BaseWxCpMessage {
 
   private static final long serialVersionUID = 1L;
 
@@ -25,6 +22,12 @@ public class FileMessage extends AbstractWxCpMessage {
    */
   @SerializedName("file")
   private Media media;
+
+  /**
+   * 表示是否是保密消息，0表示否，1表示是，默认0
+   */
+  @SerializedName("safe")
+  protected String safe = MsgSafeEnum.NO.getValue();
 
   private FileMessage() {
     setMsgType(WxConsts.KefuMsgType.FILE);
@@ -40,7 +43,6 @@ public class FileMessage extends AbstractWxCpMessage {
     private String toParty;
     private String toTag;
     private MsgSafeEnum safe = MsgSafeEnum.NO;
-    private IdTransEnum enableIdTrans = IdTransEnum.DISABLE;
     private String mediaId;
 
     private Builder() {
@@ -76,20 +78,14 @@ public class FileMessage extends AbstractWxCpMessage {
       return this;
     }
 
-    public Builder setEnableIdTrans(IdTransEnum enableIdTrans) {
-      this.enableIdTrans = enableIdTrans;
-      return this;
-    }
-
     public FileMessage build() {
       FileMessage fileMessage = new FileMessage();
-      fileMessage.setMedia(new Media(mediaId));
-      fileMessage.setAgentId(agentId);
-      fileMessage.setToUser(toUser);
-      fileMessage.setToParty(toParty);
-      fileMessage.setToTag(toTag);
-      fileMessage.setSafe(safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue());
-      fileMessage.setEnableIdTrans(enableIdTrans != null ? enableIdTrans.getValue() : IdTransEnum.DISABLE.getValue());
+      fileMessage.media = new Media(mediaId);
+      fileMessage.agentId = agentId;
+      fileMessage.toUser = toUser;
+      fileMessage.toParty = toParty;
+      fileMessage.toTag = toTag;
+      fileMessage.safe = safe != null ? safe.getValue() : MsgSafeEnum.NO.getValue();
       return fileMessage;
     }
   }
