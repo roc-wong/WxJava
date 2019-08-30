@@ -1,8 +1,8 @@
 package me.chanjar.weixin.cp.bean.taskcard;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * <pre>
@@ -13,8 +13,8 @@ import lombok.Data;
  * @author <a href="https://github.com/domainname">Jeff</a>
  * @date 2019-05-16
  */
-@Data
-@Builder
+@Getter
+@ToString
 public class TaskCardButton {
 
   /**
@@ -43,4 +43,55 @@ public class TaskCardButton {
    */
   @SerializedName("is_bold")
   private Boolean bold;
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+
+  public static final class Builder {
+    private String key;
+    private String name;
+    private String replaceName;
+    private String color;
+    private Boolean bold;
+
+    private Builder() {
+    }
+
+    public Builder key(String key) {
+      this.key = key;
+      return this;
+    }
+
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public Builder replaceName(String replaceName) {
+      this.replaceName = replaceName;
+      return this;
+    }
+
+    public Builder color(String color) {
+      this.color = color;
+      return this;
+    }
+
+    public Builder bold(Boolean bold) {
+      this.bold = bold;
+      return this;
+    }
+
+    public TaskCardButton build() {
+      TaskCardButton taskCardButton = new TaskCardButton();
+      taskCardButton.name = this.name;
+      taskCardButton.key = this.key;
+      taskCardButton.replaceName = this.replaceName;
+      taskCardButton.color = this.color;
+      taskCardButton.bold = this.bold;
+      return taskCardButton;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import com.google.common.base.Joiner;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,21 +20,37 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import me.chanjar.weixin.cp.api.*;
+import me.chanjar.weixin.cp.api.WxCpAgentService;
+import me.chanjar.weixin.cp.api.WxCpChatService;
+import me.chanjar.weixin.cp.api.WxCpDepartmentService;
+import me.chanjar.weixin.cp.api.WxCpExternalContactService;
+import me.chanjar.weixin.cp.api.WxCpMediaService;
+import me.chanjar.weixin.cp.api.WxCpMenuService;
+import me.chanjar.weixin.cp.api.WxCpOAuth2Service;
+import me.chanjar.weixin.cp.api.WxCpOaService;
+import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.api.WxCpTagService;
+import me.chanjar.weixin.cp.api.WxCpTaskCardService;
+import me.chanjar.weixin.cp.api.WxCpUserService;
 import me.chanjar.weixin.cp.bean.WxCpMaJsCode2SessionResult;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
+import me.chanjar.weixin.cp.bean.message.BaseWxCpMessage;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.*;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.BATCH_GET_RESULT;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.BATCH_REPLACE_PARTY;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.BATCH_REPLACE_USER;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.GET_AGENT_CONFIG_TICKET;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.GET_CALLBACK_IP;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.GET_JSAPI_TICKET;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.JSCODE_TO_SESSION;
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.MESSAGE_SEND;
 
 /**
  * .
@@ -72,6 +89,8 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   protected WxCpConfigStorage configStorage;
 
   private WxSessionManager sessionManager = new StandardSessionManager();
+
+  private Gson gson = new Gson();
 
   /**
    * 临时文件目录.
@@ -167,6 +186,16 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     jsapiSignature.setAppId(this.configStorage.getCorpId());
 
     return jsapiSignature;
+  }
+
+  @Override
+  public WxCpMessageSendResult messageSend(BaseWxCpMessage message) throws WxErrorException {
+    Integer agentId = message.getAgentId();
+    if (null == agentId) {
+      message.setAgentId(this.getWxCpConfigStorage().getAgentId());
+    }
+
+    return WxCpMessageSendResult.fromJson(this.post(this.configStorage.getApiUrl(MESSAGE_SEND), gson.toJson(message)));
   }
 
   @Override

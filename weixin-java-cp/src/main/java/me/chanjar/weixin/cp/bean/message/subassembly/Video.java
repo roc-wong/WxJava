@@ -1,9 +1,7 @@
 package me.chanjar.weixin.cp.bean.message.subassembly;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -13,8 +11,6 @@ import java.io.Serializable;
  * @since 2019/8/23 20:12
  */
 @Getter
-@Setter
-@Builder
 @ToString
 public class Video implements Serializable {
 
@@ -44,4 +40,46 @@ public class Video implements Serializable {
   @SerializedName("thumb_media_id")
   private String thumbMediaId;
 
+  public static Builder newBuilder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private String mediaId;
+    private String title;
+    private String description;
+    private String thumbMediaId;
+
+    private Builder() {
+    }
+
+    public Builder mediaId(String mediaId) {
+      this.mediaId = mediaId;
+      return this;
+    }
+
+    public Builder title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder thumbMediaId(String thumbMediaId) {
+      this.thumbMediaId = thumbMediaId;
+      return this;
+    }
+
+    public Video build() {
+      Video video = new Video();
+      video.description = this.description;
+      video.mediaId = this.mediaId;
+      video.thumbMediaId = this.thumbMediaId;
+      video.title = this.title;
+      return video;
+    }
+  }
 }

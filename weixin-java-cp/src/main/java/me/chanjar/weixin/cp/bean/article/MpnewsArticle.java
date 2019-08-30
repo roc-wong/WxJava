@@ -1,8 +1,9 @@
 package me.chanjar.weixin.cp.bean.article;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -14,8 +15,9 @@ import java.io.Serializable;
  * @author Binary Wang
  * @author Roc Wong
  */
-@Data
-@Builder(builderMethodName = "newBuilder")
+@Getter
+@NoArgsConstructor
+@ToString
 public class MpnewsArticle implements Serializable {
   private static final long serialVersionUID = 6985871812170756481L;
 
@@ -57,4 +59,68 @@ public class MpnewsArticle implements Serializable {
   @SerializedName("show_cover_pic")
   private String showCoverPic;
 
+
+  public static Builder newBuilder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private String title;
+    private String thumbMediaId;
+    private String author;
+    private String contentSourceUrl;
+    private String content;
+    private String digest;
+    private String showCoverPic;
+
+    private Builder() {
+    }
+
+    public Builder title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder thumbMediaId(String thumbMediaId) {
+      this.thumbMediaId = thumbMediaId;
+      return this;
+    }
+
+    public Builder author(String author) {
+      this.author = author;
+      return this;
+    }
+
+    public Builder contentSourceUrl(String contentSourceUrl) {
+      this.contentSourceUrl = contentSourceUrl;
+      return this;
+    }
+
+    public Builder content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    public Builder digest(String digest) {
+      this.digest = digest;
+      return this;
+    }
+
+    public Builder showCoverPic(String showCoverPic) {
+      this.showCoverPic = showCoverPic;
+      return this;
+    }
+
+    public MpnewsArticle build() {
+      MpnewsArticle mpnewsArticle = new MpnewsArticle();
+      mpnewsArticle.title = this.title;
+      mpnewsArticle.showCoverPic = this.showCoverPic;
+      mpnewsArticle.contentSourceUrl = this.contentSourceUrl;
+      mpnewsArticle.thumbMediaId = this.thumbMediaId;
+      mpnewsArticle.content = this.content;
+      mpnewsArticle.author = this.author;
+      mpnewsArticle.digest = this.digest;
+      return mpnewsArticle;
+    }
+  }
 }

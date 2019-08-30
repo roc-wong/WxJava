@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.bean.message.subassembly;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.List;
  * @since 2019/8/23 20:12
  */
 @Getter
+@NoArgsConstructor
 @ToString
 public class MiniProgramNotice implements Serializable {
 

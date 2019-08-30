@@ -26,7 +26,7 @@ public class TextCardMessage extends BaseWxCpMessage {
   @SerializedName("enable_id_trans")
   protected String enableIdTrans = IdTransEnum.DISABLE.getValue();
 
-  private TextCardMessage() {
+  public TextCardMessage() {
     setMsgType(WxConsts.KefuMsgType.TEXTCARD);
   }
 

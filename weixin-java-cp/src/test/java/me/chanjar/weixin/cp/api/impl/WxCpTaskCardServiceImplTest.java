@@ -52,9 +52,9 @@ public class WxCpTaskCardServiceImplTest {
     WxCpMessageSendResult messageSendResult = this.wxCpService.messageSend(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
-    System.out.println(messageSendResult.getInvalidPartyList());
-    System.out.println(messageSendResult.getInvalidUserList());
-    System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.extractInvalidPartyList());
+    System.out.println(messageSendResult.extractInvalidUserList());
+    System.out.println(messageSendResult.extractInvalidTagList());
   }
 
   @Test

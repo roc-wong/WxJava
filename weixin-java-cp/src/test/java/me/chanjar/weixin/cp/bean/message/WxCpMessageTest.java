@@ -91,7 +91,7 @@ public class WxCpMessageTest {
     VideoMessage templateMessage = gson.fromJson(originalTemplateJson, VideoMessage.class);
     String gsonSerializeTemplate = gson.toJson(templateMessage);
 
-    Video video = Video.builder().mediaId("MEDIA_ID").title("Title").description("Description").build();
+    Video video = Video.newBuilder().mediaId("MEDIA_ID").title("Title").description("Description").build();
 
     VideoMessage videoMessage = VideoMessage.newBuilder()
       .setVideo(video)
@@ -134,7 +134,7 @@ public class WxCpMessageTest {
 
     String gsonSerializeTemplate = gson.toJson(templateMessage);
 
-    TextCard textCard = TextCard.builder().title("领奖通知")
+    TextCard textCard = TextCard.newBuilder().title("领奖通知")
       .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
       .url("URL")
       .btnTxt("更多")
@@ -285,13 +285,13 @@ public class WxCpMessageTest {
       .addContentItem("参与人员", "周剑轩")
       .build();
 
-    MiniProgramNoticeMessage fileMessage = MiniProgramNoticeMessage.newBuilder()
+    MiniProgramNoticeMessage miniProgramNoticeMessage = MiniProgramNoticeMessage.newBuilder()
       .setMiniProgramNotice(miniProgramNotice)
       .setToUser("zhangsan|lisi")
       .setToParty("1|2")
       .setToTag("1|2").build();
 
-    String compareValue = gson.toJson(fileMessage);
+    String compareValue = gson.toJson(miniProgramNoticeMessage);
 
     assertThat(gsonSerializeTemplate).isEqualTo(compareValue);
   }

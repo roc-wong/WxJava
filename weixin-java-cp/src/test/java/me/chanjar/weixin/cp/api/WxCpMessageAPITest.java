@@ -1,15 +1,16 @@
 package me.chanjar.weixin.cp.api;
 
 import com.google.common.collect.ImmutableMap;
-import org.testng.annotations.*;
-
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpMessage;
 import me.chanjar.weixin.cp.bean.WxCpMessageSendResult;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Guice;
+import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
 
 /***
  * 测试发送消息
@@ -40,9 +41,9 @@ public class WxCpMessageAPITest {
     WxCpMessageSendResult messageSendResult = this.wxService.messageSend(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
-    System.out.println(messageSendResult.getInvalidPartyList());
-    System.out.println(messageSendResult.getInvalidUserList());
-    System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.extractInvalidPartyList());
+    System.out.println(messageSendResult.extractInvalidUserList());
+    System.out.println(messageSendResult.extractInvalidTagList());
   }
 
   @Test
@@ -57,9 +58,9 @@ public class WxCpMessageAPITest {
     WxCpMessageSendResult messageSendResult = this.wxService.messageSend(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
-    System.out.println(messageSendResult.getInvalidPartyList());
-    System.out.println(messageSendResult.getInvalidUserList());
-    System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.extractInvalidPartyList());
+    System.out.println(messageSendResult.extractInvalidUserList());
+    System.out.println(messageSendResult.extractInvalidTagList());
   }
 
   @Test
@@ -85,9 +86,9 @@ public class WxCpMessageAPITest {
     WxCpMessageSendResult messageSendResult = this.wxService.messageSend(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
-    System.out.println(messageSendResult.getInvalidPartyList());
-    System.out.println(messageSendResult.getInvalidUserList());
-    System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.extractInvalidPartyList());
+    System.out.println(messageSendResult.extractInvalidUserList());
+    System.out.println(messageSendResult.extractInvalidTagList());
   }
 
   @Test
@@ -96,7 +97,7 @@ public class WxCpMessageAPITest {
       .TEXTCARD()
       .toUser(configStorage.getUserId())
       .btnTxt("更多")
-      .description( "<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
+      .description("<div class=\"gray\">2016年9月26日</div> <div class=\"normal\">恭喜你抽中iPhone 7一台，领奖码：xxxx</div><div class=\"highlight\">请于2016年10月10日前联系行政同事领取</div>")
       .url("URL")
       .title("领奖通知")
       .build();
@@ -104,9 +105,9 @@ public class WxCpMessageAPITest {
     WxCpMessageSendResult messageSendResult = this.wxService.messageSend(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
-    System.out.println(messageSendResult.getInvalidPartyList());
-    System.out.println(messageSendResult.getInvalidUserList());
-    System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.extractInvalidPartyList());
+    System.out.println(messageSendResult.extractInvalidUserList());
+    System.out.println(messageSendResult.extractInvalidTagList());
   }
 
   @Test
@@ -119,16 +120,16 @@ public class WxCpMessageAPITest {
       .title("会议室预订成功通知")
       .description("4月27日 16:16")
       .emphasisFirstItem(true)
-      .contentItems(ImmutableMap.of("会议室","402",
-        "会议地点","广州TIT-402会议室",
-        "会议时间","2018年8月1日 09:00-09:30"))
+      .contentItems(ImmutableMap.of("会议室", "402",
+        "会议地点", "广州TIT-402会议室",
+        "会议时间", "2018年8月1日 09:00-09:30"))
       .build();
 
     WxCpMessageSendResult messageSendResult = this.wxService.messageSend(message);
     assertNotNull(messageSendResult);
     System.out.println(messageSendResult);
-    System.out.println(messageSendResult.getInvalidPartyList());
-    System.out.println(messageSendResult.getInvalidUserList());
-    System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.extractInvalidPartyList());
+    System.out.println(messageSendResult.extractInvalidUserList());
+    System.out.println(messageSendResult.extractInvalidTagList());
   }
 }

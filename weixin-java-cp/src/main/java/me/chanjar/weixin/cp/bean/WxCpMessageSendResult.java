@@ -1,15 +1,14 @@
 package me.chanjar.weixin.cp.bean;
 
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.base.Splitter;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 消息发送结果对象类.
@@ -46,7 +45,7 @@ public class WxCpMessageSendResult implements Serializable {
   private String invalidTag;
 
 
-  public List<String> getInvalidUserList() {
+  public List<String> extractInvalidUserList() {
     return this.content2List(this.invalidUser);
   }
 
@@ -58,11 +57,11 @@ public class WxCpMessageSendResult implements Serializable {
     return Splitter.on("|").splitToList(content);
   }
 
-  public List<String> getInvalidPartyList() {
+  public List<String> extractInvalidPartyList() {
     return this.content2List(this.invalidParty);
   }
 
-  public List<String> getInvalidTagList() {
+  public List<String> extractInvalidTagList() {
     return this.content2List(this.invalidTag);
   }
 }
